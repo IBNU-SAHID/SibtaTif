@@ -9,7 +9,7 @@
         class="block w-1/2 max-sm:w-full  mx-auto p-4 bg-white border rounded-b-lg  shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
 
         <div class="">
-            @if ($errors->any())
+            {{-- @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -17,8 +17,8 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
-            
+            @endif --}}
+
             <form action="/mahasiswa/daftar" method="post">
                 @csrf
                 {{-- data mahasiswa --}}
@@ -137,13 +137,13 @@
                             Tugas Akhir</label>
                         <div class="flex">
                             <div class="flex items-center mb-4">
-                                <input id="laporan-base" type="radio" value="laporan base" name="jenis_ta"
+                                <input id="laporan-base" type="radio" value="Laporan base" name="jenis_ta"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="laporan-base"
                                     class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Laporan Base</label>
                             </div>
                             <div class="flex items-center mb-4 ml-4">
-                                <input id="paper-base" type="radio" value="paper-base" name="jenis_ta"
+                                <input id="paper-base" type="radio" value="Paper base" name="jenis_ta"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="paper-base"
                                     class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Paper Base</label>

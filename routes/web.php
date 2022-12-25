@@ -12,6 +12,7 @@ use App\Http\Controllers\BimbinganController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\DashboardKordinatorController;
 use App\Http\Controllers\DashboardDosenController;
+use Dompdf\Dompdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,36 +25,21 @@ use App\Http\Controllers\DashboardDosenController;
 |
 */
 
-// kordinator
-Route::get('/dashboard', [DashboardKordinatorController::class, 'index']);
-Route::get('/list-mahasiswa', [MahasiswaController::class, 'listMahasiswa']);
-Route::get('/list-dosen', [DosenController::class, 'listDosen']);
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes
+|--------------------------------------------------------------------------
+*/
+//logout
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+});
+Route::get('/Konfirmasi_keluar', function () {
+    return view('keluar');
+});
 
-// Route::get('/list-dosen', function () {
-//     return view('/kordinator/dosen');
-// });
-
-// Route::get('/list-mahasiswa', function () {
-//     return view('/kordinator/mahasiswa');
-// });
-
-// Mahasiswa
-Route::get('/mahasiswa/bimbingan', [MahasiswaController::class, 'index']);
-Route::post('/mahasiswa/bimbingan/store', [RiwayatController::class, 'store']);
-// Route::post('/mahasiswa/bimbingan/buat_catatan', [
-//     BimbinganController::class,
-//     'simpanRiwayatBimbingan',
-// ]);
-
-//dosen
-//dashboard
-Route::get('/dosen', [DashboardDosenController::class, 'index']);
-Route::post('/konfirmasi', [DashboardDosenController::class, 'konfirmasi']);
-//bimbingan
-Route::get('/dosen/bimbingan', [BimbinganController::class, 'index']);
-Route::post('/dosen/bimbingan', [BimbinganController::class, 'store']);
-
-// daftar //
+//----------------------- daftar -------------------------//
 // dosen
 Route::get('/dosen/daftar', [RegisterDosenController::class, 'index']);
 Route::post('/dosen/daftar', [RegisterDosenController::class, 'store']);
@@ -61,6 +47,126 @@ Route::post('/dosen/daftar', [RegisterDosenController::class, 'store']);
 Route::get('/mahasiswa/daftar', [RegisterMahasiswaController::class, 'index']);
 Route::post('/mahasiswa/daftar', [RegisterMahasiswaController::class, 'store']);
 
-// masuk //
-Route::get('/', [LoginController::class, 'index']);
-Route::post('/', [LoginController::class, 'authenticate']);
+//----------------------- login -------------------------//
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::post('/', [LoginController::class, 'authenticate'])->name('login');
+
+//-----------------------------------------------------------------------
+
+/*
+|--------------------------------------------------------------------------
+| Kordinator Routes
+|--------------------------------------------------------------------------
+*/
+//dashboard
+Route::get('/dashboard', [
+    DashboardKordinatorController::class,
+    'index',
+])->middleware('auth');
+//list mahasiswa
+Route::get('/list/mahasiswa', [
+    MahasiswaController::class,
+    'listMahasiswaBimbingan',
+])->middleware('auth');
+//cari mahasiswa
+Route::post('/list/mahasiswa', [
+    MahasiswaController::class,
+    'search',
+])->middleware('auth');
+//list dosen
+Route::get('/list/dosen', [DosenController::class, 'listDosen'])->middleware(
+    'auth'
+);
+//cari dosen
+Route::post('/list/dosen', [DosenController::class, 'search'])->middleware(
+    'auth'
+);
+//lihat mahasiswa bimbingan
+Route::get('/lihatMahasiswa/{nim}', [
+    MahasiswaController::class,
+    'lihatMahasiswa',
+])
+    ->name('lihatMahasiswa')
+    ->middleware('auth');
+
+//lihat dosen
+Route::get('/lihatDosen/{nip}', [DosenController::class, 'lihatDosen'])
+    ->name('lihatDosen')
+    ->middleware('auth');
+
+/*
+|--------------------------------------------------------------------------
+| Dosen Routes
+|--------------------------------------------------------------------------
+*/
+//dosen
+//dashboard
+Route::get('/dosen', [DashboardDosenController::class, 'index'])->middleware(
+    'auth'
+);
+//konfirmasi
+Route::post('/konfirmasi', [
+    DashboardDosenController::class,
+    'konfirmasi',
+])->middleware('auth');
+//list mahasiswa bimbingan
+Route::get('/dosen/bimbingan', [
+    BimbinganController::class,
+    'mahasiswaSedangBimbingan',
+]);
+//tambahkan mahasiswa bimbingan
+Route::post('/dosen/bimbingan', [
+    BimbinganController::class,
+    'store',
+])->middleware('auth');
+//list mahasiswa selesai bimbingan
+Route::get('/dosen/bimbingan/selesai', [
+    BimbinganController::class,
+    'mahasiswaSelesaiBimbingan',
+])->middleware('auth');
+
+//lihat mahasiswa bimbingan
+Route::get('/dosen/lihatMahasiswa/{nim}', [
+    MahasiswaController::class,
+    'lihatMahasiswa',
+])
+    ->name('lihatMahasiswaBimbingan')
+    ->middleware('auth');
+
+/*
+|--------------------------------------------------------------------------
+| Mahasiswa Routes
+|--------------------------------------------------------------------------
+*/
+//halamah utama bimbingan
+Route::get('/mahasiswa/bimbingan', [
+    MahasiswaController::class,
+    'index',
+])->middleware('auth');
+//simpan riwayat bimbinan
+Route::post('/mahasiswa/bimbingan/store', [
+    RiwayatController::class,
+    'store',
+])->middleware('auth');
+//lihat riwayat bimbingan
+Route::get('/mahasiswa/data_mahasiswa', [
+    MahasiswaController::class,
+    'dataMahasiswa',
+])->middleware('auth');
+//ubah status bimbingan jadi selesai
+Route::get('/mahasiswa/selesai', [
+    BimbinganController::class,
+    'statusSelesai',
+])->middleware('auth');
+
+/*
+|--------------------------------------------------------------------------
+| Form Routes
+|--------------------------------------------------------------------------
+*/
+//form//
+Route::get('mahasiswa/bimbingan/form', [MahasiswaController::class, 'lihat']);
+// download form
+Route::get('/download/{nim}', [MahasiswaController::class, 'download'])->name(
+    'download'
+);

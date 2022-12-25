@@ -14,7 +14,8 @@
         <div class="flex flex-row">
             <div class="basis-1/3 max-sm:basis-1/2">
 
-                <form class="flex items-center">
+                <form class="flex items-center" action="/list/mahasiswa" method="POST">
+                    @csrf
                     <label for="simple-search" class="sr-only">Search</label>
                     <div class="relative w-full">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -25,7 +26,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </div>
-                        <input type="text" id="simple-search"
+                        <input type="text" id="simple-search" name="search"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Search">
                     </div>
@@ -126,7 +127,7 @@
 
         <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
             <table class="table-auto w-full text-sm  text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-info-100 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-xs text-gray-100 uppercase bg-info-500 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="py-3 px-6">
                             Nama
@@ -148,45 +149,34 @@
                             class="bg-gray-50 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <th scope="row"
                                 class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $mhs->nama}}
+                                {{ $mhs->nama }}
                             </th>
                             <td class="py-4 px-6">
-                                {{ $mhs->nim}}
+                                {{ $mhs->nim }}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $mhs->jurusan}}
+                                {{ $mhs->jurusan }}
                             </td>
                             <td class="py-4 px-6 text-right">
-                                <a href="#"
+                                <a href="{{ route('lihatMahasiswa', ['nim' => $mhs->nim]) }}"
                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:text-blue-800 dark:hover:text-blue-400">
                                     Lihat
                                 </a>
                             </td>
                         </tr>
                     @endforeach
-                    {{-- <tr
-                        class="bg-gray-50 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Ibnu Sahid
-                        </th>
-                        <td class="py-4 px-6">
-                            123456789123456
-                        </td>
-                        <td class="py-4 px-6">
-                            Teknik Informatika
-                        </td>
-                        <td class="py-4 px-6">
-                            4
-                        </td>
-                        <td class="py-4 px-6 text-right">
-                            <a href="#"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Lihat</a>
-                        </td>
-                    </tr> --}}
-
                 </tbody>
             </table>
+            
         </div>
+        <div>
+            <div class="pt-4">
+                
+                    {{$data->links()}}
+                
+            </div>
+        </div>
+        
 
 
     </div>

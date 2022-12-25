@@ -27,7 +27,7 @@ class LoginController extends Controller
             if (Auth::user()->role == 'mahasiswa') {
                 return redirect()->intended('mahasiswa/bimbingan');
             } elseif (Auth::user()->role == 'dosen') {
-                return redirect()->intended('/dosen/bimbingan');
+                return redirect()->intended('/dosen');
             } elseif (Auth::user()->role == 'kordinator') {
                 return redirect()->intended('/dashboard');
             }

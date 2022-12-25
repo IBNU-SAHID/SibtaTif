@@ -10,7 +10,7 @@
         class="block w-1/2 max-sm:w-full  mx-auto p-4 bg-white border rounded-b-lg  shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
 
         <div class="">
-            @if ($errors->any())
+            {{-- @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -18,7 +18,7 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+            @endif --}}
             <form action="/dosen/daftar" method="post">
                 @csrf
                 {{-- data mahasiswa --}}
@@ -43,11 +43,11 @@
                                 login)</span></label>
                         <input type="text" id="nip" name="nip" value="{{ old('nip') }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="NIP Anda" required oninvalid="this.setCustomValidity('Silahkan input NIM Anda')"
+                            placeholder="NIP Anda" required oninvalid="this.setCustomValidity('Silahkan input NIP Anda')"
                             oninput="setCustomValidity('')">
                         @error('nip')
                             <p id="outlined_error_help" class="mt-2 text-xs text-red-600 dark:text-red-400"><span
-                                    class="font-medium">{{$message}}</span> </p>
+                                    class="font-medium">{{ $message }}</span> </p>
                         @enderror
                     </div>
 
@@ -108,7 +108,7 @@
 
                 {{-- data akun dosen --}}
                 <div id="data-akun-dosen">
-                    <label  class="block mb-2 text-lg font-bold  text-info-500 dark:text-white">Password
+                    <label class="block mb-2 text-lg font-bold  text-info-500 dark:text-white">Password
                         Akun</label>
                     <hr class=" mb-3 py-0.5 bg-info-500 ">
                     {{-- Password --}}
@@ -119,18 +119,20 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="•••••••••" required
                             oninvalid="this.setCustomValidity('kolom ini tidak boleh kosong')"
-                            oninput="setCustomValidity('')">
+                            oninput="setCustomValidity('')"
+                            onChange="onChange()">
                     </div>
                     {{-- konfirmasi password --}}
                     <div class="mb-6">
                         <label for="confirm_password"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Konfirmasi
                             password</label>
-                        <input type="password" id="confirm_password" name="konfirmasiPassword"
+                        <input type="password" id="confirm_password" name="confirm"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="•••••••••" required
                             oninvalid="this.setCustomValidity('kolom ini tidak boleh kosong')"
-                            oninput="setCustomValidity('')">
+                            oninput="setCustomValidity('')"
+                            onChange="onChange()">
                     </div>
                     <button type="submit"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -140,5 +142,17 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function onChange() {
+            const password = document.querySelector('input[name=password]');
+            const confirm = document.querySelector('input[name=confirm]');
+            if (confirm.value === password.value) {
+                confirm.setCustomValidity('');
+            } else {
+                confirm.setCustomValidity('Passwords do not match.');
+            }
+        }
+    </script>
 
 @endSection

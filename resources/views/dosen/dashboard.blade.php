@@ -1,7 +1,8 @@
-@extends('/layouts/dosen/dashboardDosen')
+@extends('/layouts/dosen/main')
 @section('title', 'Dashboard')
 
 @section('content')
+
     <div class="w-full max-sm:w-screen p-4 max-sm: text-left bg-white  sm:p-8 dark:bg-gray-800 dark:border-gray-700">
         <h5 class="mb-2 max-sm:text-5xl text-2xl max-sm:text-[18px] font-bold text-gray-900 dark:text-white">
             Data Pengguna
@@ -11,10 +12,10 @@
         <div class="flex flex-row max-sm:flex-col">
             {{-- mahasiswa sedang --}}
             <div class="">
-                <a href="/list-mahasiswa"
+                <a href="/dosen/bimbingan"
                     class="block md: max-w-sm p-6  bg-info-500 border border-gray-200 rounded-lg shadow-md hover:bg-info-600 ">
                     <h5 class="mb-2 text-left text-5xl font-bold tracking-tight text-gray-100 dark:text-white">
-                        8</h5>
+                        {{$mhsBimbingan}}</h5>
                     <p class="font-normal text-gray-100 dark:text-gray-400">
                         Mahasiswa Sedang Bimbingan
                     </p>
@@ -23,10 +24,10 @@
 
             {{-- selsai bimbingan --}}
             <div class="md:ml-4">
-                <a href="/list-dosen"
+                <a href="/dosen/bimbingan/selesai"
                     class="block max-w-sm p-6 bg-danger-500 border border-gray-200 rounded-lg shadow-md hover:bg-danger-600 ">
                     <h5 class="mb-2 text-left text-5xl font-bold tracking-tight text-gray-100 dark:text-white">
-                        7</h5>
+                        {{$mhsSelesai}}</h5>
                     <p class="font-normal text-gray-100 dark:text-gray-400">
                         Mahasiswa Selesai Bimbingan
                     </p>
@@ -36,7 +37,7 @@
     </div>
     <div class="w-full max-sm:w-screen p-1 max-sm: text-left bg-white  sm:p-8 dark:bg-gray-800 dark:border-gray-700">
         <h5 class="mb-2 max-sm:text-5xl text-2xl max-sm:text-[18px] font-bold text-gray-900 dark:text-white">
-            Permintaan Kornfirmasi Riwayat Bimbingan
+            Permintaan Konfirmasi Riwayat Bimbingan
         </h5>
         <hr class=" mb-3 py-0.5 bg-info-500 ">
         <div class="overflow-y-auto max-h-40 ">

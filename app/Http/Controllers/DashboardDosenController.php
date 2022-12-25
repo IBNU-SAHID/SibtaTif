@@ -12,12 +12,22 @@ class DashboardDosenController extends Controller
     public function index()
     {
         $auth_id = Auth::user()->username;
+        $mhsBimbingan = \App\Models\bimbingan::where('pembimbing_id', $auth_id)
+            ->where('statusMahasiswa', '1')
+            ->count();
+        $mhsSelesai = \App\Models\bimbingan::where('pembimbing_id', $auth_id)
+            ->where('statusMahasiswa', '2')
+            ->count();
+
         $mhs = \App\Models\riwayat_bimbingan::with('mahasiswa')
             ->where('pembimbing_id', $auth_id)
             ->where('status', '0')
             ->get();
 
-        return view('/dosen/dashboard')->with('data', $mhs);
+        return view('/dosen/dashboard')
+            ->with('data', $mhs)
+            ->with('mhsBimbingan', $mhsBimbingan)
+            ->with('mhsSelesai', $mhsSelesai);
     }
 
     public function konfirmasi(Request $request)

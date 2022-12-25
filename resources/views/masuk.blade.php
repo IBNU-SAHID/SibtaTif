@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
-    <title>Document</title>
+    <title>Sibta</title>
 </head>
 
 <body class=" max-sm:bg-primary-100 ">
@@ -28,7 +28,7 @@
                     <a href="/"
                         class="flex items-center mb-6 text-4xl font-semibold text-gray-900 dark:text-white">
                         <img class="w-20 h-20 mr-2" src="{{ asset('/img/logo/logo.png') }}" alt="logo">
-                        SibTA
+                        Sibta
                     </a>
                     <div
                         class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md max-sm:mt-5 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
